@@ -153,7 +153,7 @@ function CheckupTeaser({go}){
 
 function FacilitiesTeaser({go}){
   const f=D.facilities;
-  return <Section>
+  return <Section id="instalaciones">
     <div className="cm-doc-split" style={{display:'grid',gridTemplateColumns:'1fr auto',gap:24,alignItems:'end',marginBottom:32}}>
       <Reveal><SectionHeading eyebrow="Instalaciones" title="Espacios de primer nivel, con calidez"/></Reveal>
       <Button variant="secondary" onClick={()=>go('instalaciones')} iconRight={<Icon name="arrow-right" size={15}/>}>Recorrer instalaciones</Button>

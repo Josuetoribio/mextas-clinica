@@ -159,12 +159,12 @@ function AllSpecialties({go}){
   </Section>;
 }
 
-function LocationsPage({onBook,go}){
+function LocationsPage({onBook,go,embedded=false}){
   const [sel,setSel]=React.useState(D.locations[0].id);
   const l=D.locations.find(x=>x.id===sel);
-  return <Section id="sedes">
-    <nav aria-label="Ruta" style={{display:'flex',gap:9,fontSize:12.5,color:'var(--text-muted)',marginBottom:22}}>
-      <a href="#" onClick={e=>{e.preventDefault();go('inicio')}}>Inicio</a><span>/</span><span style={{color:'var(--text-heading)'}}>Sedes</span></nav>
+  return <Section id="sedes" tone={embedded?'sunken':'page'}>
+    {!embedded&&<nav aria-label="Ruta" style={{display:'flex',gap:9,fontSize:12.5,color:'var(--text-muted)',marginBottom:22}}>
+      <a href="#" onClick={e=>{e.preventDefault();go('inicio')}}>Inicio</a><span>/</span><span style={{color:'var(--text-heading)'}}>Sedes</span></nav>}
     <SectionHeading eyebrow="Nuestras sedes" title="Cinco ubicaciones, la misma atención" description="Selecciona una sede para ver su información, especialidades y servicios disponibles."/>
     <div style={{display:'flex',gap:9,marginTop:26,flexWrap:'wrap'}}>
       {D.locations.map(x=><Chip key={x.id} selected={sel===x.id} onClick={()=>setSel(x.id)}>{x.name}</Chip>)}</div>

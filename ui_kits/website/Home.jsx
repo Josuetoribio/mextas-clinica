@@ -2,7 +2,7 @@ const {Button,Badge,Chip,Card,Eyebrow,SectionHeading,SpecialtyCard,DoctorCard,St
 const D=window.CM_DATA;
 
 function Hero({onBook,go}){
-  return <section style={{background:'var(--surface-page)',position:'relative'}}>
+  return <section id="inicio" style={{background:'var(--surface-page)',position:'relative'}}>
     <div className="cm-hero" style={{maxWidth:'var(--container-max)',margin:'0 auto',padding:'0 0 0 var(--gutter)',display:'grid',gridTemplateColumns:'minmax(0,1fr) minmax(0,1.15fr)',gap:56,alignItems:'center',minHeight:520}}>
       <Reveal style={{paddingBlock:'var(--space-9)'}}>
         <Eyebrow>Tu salud, nuestra prioridad</Eyebrow>
@@ -38,6 +38,23 @@ function QuickActions({onBook,go}){
     </div></div>;
 }
 
+function AboutTeaser({go,full=false}){
+  return <Section id={full?undefined:'nosotros'}>
+    <Reveal><SectionHeading eyebrow="Nosotros" title="Una clínica construida alrededor del paciente"
+      description="ClinicaMextas nació en 2016 como un consultorio de medicina interna en San Pedro Garza García. Hoy son cinco sedes que comparten un mismo modelo: escuchar antes de indicar."
+      actions={full?null:<Button variant="secondary" onClick={()=>go('nosotros')} iconRight={<Icon name="arrow-right" size={15}/>}>Conoce más de nosotros</Button>}/></Reveal>
+    <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginTop:44}}>
+      {[['Misión','Ofrecer atención médica especializada, accesible y humana, con continuidad real entre consultas.'],
+        ['Visión','Ser la clínica privada de referencia en el noreste de México por la calidad de su trato, no solo de su tecnología.'],
+        ['Filosofía','Medicina centrada en el paciente: prevención, explicación clara y seguimiento en cada etapa.']].map(([t,d],i)=>
+        <Reveal key={t} delay={i*80}><Card padding={28} style={{height:'100%'}}><Eyebrow>{t}</Eyebrow>
+          <p style={{fontSize:15,lineHeight:1.7,color:'var(--text-body)',marginTop:14}}>{d}</p></Card></Reveal>)}
+    </div>
+    {!full&&<div style={{display:'flex',gap:10,flexWrap:'wrap',marginTop:28}}>
+      {['Empatía','Excelencia','Confianza','Innovación','Ética','Cercanía'].map(v=><Badge key={v} tone="green">{v}</Badge>)}</div>}
+  </Section>;
+}
+
 function Specialties({go}){
   const list=D.specialties.slice(0,7);
   return <Section id="especialidades" tone="raised">
@@ -64,8 +81,8 @@ function Doctors({go,onBook}){
   </Section>;
 }
 
-function Services({onOpen}){
-  return <Section tone="raised" id="servicios">
+function Services({onOpen,tone='raised'}){
+  return <Section tone={tone} id="servicios">
     <Reveal><SectionHeading align="center" eyebrow="Servicios" title="Atención integral para tu salud" description="Estudios, prevención y seguimiento en un mismo lugar."/></Reveal>
     <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginTop:44}}>
       {D.services.map((s,i)=><Reveal key={s.name} delay={i*60}>
@@ -184,4 +201,4 @@ function ContactBlock(){
   </Section>;
 }
 
-Object.assign(window,{Hero,QuickActions,Specialties,Doctors,Services,Stats,Emergency,Faq,Blog,ContactBlock});
+Object.assign(window,{Hero,QuickActions,AboutTeaser,Specialties,Doctors,Services,Stats,Emergency,Faq,Blog,ContactBlock});

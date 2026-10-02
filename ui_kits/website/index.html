@@ -16,9 +16,10 @@
 <script src="../../_ds_bundle.js"></script>
 <script src="./data.js"></script>
 <style>
-html,body{margin:0;background:var(--surface-page);overflow-x:hidden}
+html,body{margin:0;background:var(--surface-page);overflow-x:clip}
 @keyframes cmRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
 .cm-mobile{display:none}
+main section[id]{scroll-margin-top:72px}
 .cm-gtile:hover img{transform:scale(1.03)}
 @media(max-width:1400px){.cm-phone{display:none!important}}
 @media(max-width:1300px){.cm-nav{gap:15px!important}.cm-nav a{font-size:13px!important}}
@@ -174,32 +175,65 @@ function FloatingActions({onTop,showTop}){
   </div>;
 }
 
+/* Desplaza a una sección de la portada. Corrige la posición al terminar por si
+   alguna imagen diferida cambió la altura de lo que hay arriba durante el desplazamiento. */
+function toSection(k,smooth){
+  const behavior=smooth?'smooth':'instant';
+  if(k==='inicio') return window.scrollTo({top:0,behavior});
+  const el=document.getElementById(k);if(!el)return;
+  el.scrollIntoView({behavior,block:'start'});
+  const t0=performance.now();let t;
+  const settle=()=>{clearTimeout(t);t=setTimeout(()=>{window.removeEventListener('scroll',settle);
+    if(performance.now()-t0>2500)return;
+    const off=el.getBoundingClientRect().top-(parseFloat(getComputedStyle(el).scrollMarginTop)||0);
+    if(Math.abs(off)>4)el.scrollIntoView({behavior:'instant',block:'start'})},160)};
+  window.addEventListener('scroll',settle,{passive:true});settle();
+}
+
 function App(){
   const [page,setPage]=React.useState('inicio');
   const [book,setBook]=React.useState(null);
   const [search,setSearch]=React.useState(false);
   const [scrolled,setScrolled]=React.useState(false);
   const [svc,setSvc]=React.useState(null);
-  const scroller=React.useRef(null);
-  React.useEffect(()=>{const el=document.scrollingElement||document.documentElement;
+  const [spy,setSpy]=React.useState('inicio');
+  const pending=React.useRef(NAV.some(n=>'#'+n[0]===location.hash)?location.hash.slice(1):null);
+  React.useEffect(()=>{
     const h=()=>setScrolled(window.scrollY>60);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
-  React.useEffect(()=>{window.scrollTo({top:0,behavior:'instant'});window.lucide&&window.lucide.createIcons()},[page]);
+  React.useEffect(()=>{
+    const k=pending.current;pending.current=null;
+    if(k&&page==='inicio') requestAnimationFrame(()=>toSection(k,false));
+    else window.scrollTo({top:0,behavior:'instant'});
+    window.lucide&&window.lucide.createIcons()},[page]);
+  /* Sección activa del menú mientras se recorre la portada. */
+  React.useEffect(()=>{if(page!=='inicio')return;
+    const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)setSpy(e.target.id)}),{rootMargin:'-35% 0px -60% 0px'});
+    NAV.forEach(([k])=>{const el=document.getElementById(k);el&&io.observe(el)});
+    return()=>io.disconnect()},[page]);
   React.useEffect(()=>{const k=e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();setSearch(true)}};window.addEventListener('keydown',k);return()=>window.removeEventListener('keydown',k)},[]);
-  const go=p=>setPage(p);
+  const go=p=>{if(location.hash)history.replaceState(null,'',location.pathname+location.search);setPage(p)};
+  /* El menú baja a su sección de la portada; desde otra página, vuelve a la portada y baja. */
+  const goSection=k=>{
+    history.replaceState(null,'',location.pathname+location.search+(k==='inicio'?'':'#'+k));
+    if(page==='inicio') return toSection(k,true);
+    pending.current=k;setPage('inicio');
+  };
   const openBook=(preset)=>setBook(preset&&preset.name?{specialty:preset.specialty,doctor:preset.name,location:'Sede '+preset.location}:(preset||{}));
   const base=page.split(':')[0], arg=page.split(':')[1];
   return <>
-    <Header page={base==='especialidad'||base==='especialidades-todas'?'especialidades':base} go={go} onBook={()=>openBook()} onSearch={()=>setSearch(true)} scrolled={scrolled}/>
+    <Header page={page==='inicio'?spy:base==='especialidad'||base==='especialidades-todas'?'especialidades':base} goSection={goSection} onBook={()=>openBook()} onSearch={()=>setSearch(true)} scrolled={scrolled}/>
     <main key={page} style={{animation:'cmRise var(--dur-slow) var(--ease-entrance)'}}>
       {page==='inicio'&&<>
         <Hero onBook={()=>openBook()} go={go}/>
         <QuickActions onBook={()=>openBook()} go={go}/>
+        <AboutTeaser go={go}/>
         <Specialties go={go}/>
-        <Doctors go={go} onBook={openBook}/>
-        <Services onOpen={setSvc}/>
+        <Services onOpen={setSvc} tone="page"/>
         <CheckupTeaser go={go}/>
+        <Doctors go={go} onBook={openBook}/>
         <Stats/>
         <FacilitiesTeaser go={go}/>
+        <LocationsPage onBook={openBook} go={go} embedded/>
         <FirstVisit go={go}/>
         <Emergency go={go}/>
         <Faq/>
@@ -221,17 +255,7 @@ function App(){
       {base==='blog'&&<><Section py="var(--space-7) 0 0"><Crumbs go={go} items={[['Blog']]}/></Section><Blog go={go}/></>}
       {base==='contacto'&&<ContactBlock/>}
       {base==='nosotros'&&<>
-        <Section>
-          <SectionHeading eyebrow="Nosotros" title="Una clínica construida alrededor del paciente"
-            description="ClinicaMextas nació en 2016 como un consultorio de medicina interna en San Pedro Garza García. Hoy son cinco sedes que comparten un mismo modelo: escuchar antes de indicar."/>
-          <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginTop:44}}>
-            {[['Misión','Ofrecer atención médica especializada, accesible y humana, con continuidad real entre consultas.'],
-              ['Visión','Ser la clínica privada de referencia en el noreste de México por la calidad de su trato, no solo de su tecnología.'],
-              ['Filosofía','Medicina centrada en el paciente: prevención, explicación clara y seguimiento en cada etapa.']].map(([t,d])=>
-              <Card key={t} padding={28}><Eyebrow>{t}</Eyebrow>
-                <p style={{fontSize:15,lineHeight:1.7,color:'var(--text-body)',marginTop:14}}>{d}</p></Card>)}
-          </div>
-        </Section>
+        <AboutTeaser go={go} full/>
         <Section tone="raised">
           <SectionHeading align="center" eyebrow="Nuestro modelo de atención" title="Cinco momentos en cada consulta"/>
           <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:14,marginTop:44}}>
@@ -249,7 +273,7 @@ function App(){
         </Section>
       </>}
     </main>
-    <Footer go={go} onBook={()=>openBook()}/>
+    <Footer go={go} goSection={goSection} onBook={()=>openBook()}/>
     <BookingWizard open={!!book} onClose={()=>setBook(null)} preset={book}/>
     <SearchOverlay open={search} onClose={()=>setSearch(false)} go={go}/>
     <Modal open={!!svc} onClose={()=>setSvc(null)} size="sm" eyebrow="Servicio" title={svc&&svc.name}

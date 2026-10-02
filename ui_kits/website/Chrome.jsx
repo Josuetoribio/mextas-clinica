@@ -17,14 +17,14 @@ function Wordmark({inverse=false,size=20}){
 const NAV=[['inicio','Inicio'],['nosotros','Nosotros'],['especialidades','Especialidades'],['servicios','Servicios'],['medicos','Médicos'],['instalaciones','Instalaciones'],['sedes','Sedes'],['blog','Blog'],['contacto','Contacto']];
 const FOOT_ROUTES={'Nosotros':'nosotros','Especialidades':'especialidades','Médicos':'medicos','Instalaciones':'instalaciones','Sedes':'sedes','Horarios':'pacientes:horarios','Primera visita':'pacientes:primera','Urgencias':'urgencias','Check-ups':'checkups','Preguntas frecuentes':'pacientes:faq','Preparación para estudios':'pacientes:estudios','Métodos de pago':'pacientes:pagos','Seguros y convenios':'pacientes:seguros','Blog':'blog','Información médica':'blog','Tecnología médica':'tecnologia','Aviso de privacidad':'legal:privacidad','Términos y condiciones':'legal:terminos','Política de cookies':'legal:cookies','Accesibilidad':'legal:accesibilidad'};
 
-function Header({page,go,onBook,onSearch,scrolled}){
+function Header({page,goSection,onBook,onSearch,scrolled}){
   const [menu,setMenu]=React.useState(false);
   return <>
   <header style={{position:'sticky',top:0,zIndex:40,background:'rgba(249,246,240,.92)',backdropFilter:'blur(12px)',borderBottom:'1px solid var(--line-hairline)',transition:'padding var(--dur-base) var(--ease-standard)'}}>
     <div style={{maxWidth:'var(--container-max)',margin:'0 auto',padding:scrolled?'12px var(--gutter)':'18px var(--gutter)',display:'flex',alignItems:'center',gap:28,transition:'padding var(--dur-base) var(--ease-standard)'}}>
-      <a href="#" onClick={e=>{e.preventDefault();go('inicio')}} style={{flex:'0 0 auto'}}><Wordmark size={scrolled?17:19}/></a>
+      <a href="#inicio" onClick={e=>{e.preventDefault();goSection('inicio')}} style={{flex:'0 0 auto'}}><Wordmark size={scrolled?17:19}/></a>
       <nav className="cm-desktop cm-nav" style={{display:'flex',gap:22,marginLeft:'auto',minWidth:0}}>
-        {NAV.map(([k,l])=><a key={k} href={'#'+k} onClick={e=>{e.preventDefault();go(k)}}
+        {NAV.map(([k,l])=><a key={k} href={'#'+k} onClick={e=>{e.preventDefault();goSection(k)}} aria-current={page===k?'true':undefined}
           style={{fontSize:13.5,fontWeight:page===k?600:400,color:page===k?'var(--green-800)':'var(--text-body)',paddingBottom:4,borderBottom:'2px solid '+(page===k?'var(--gold-600)':'transparent')}}>{l}</a>)}
       </nav>
       <div style={{display:'flex',alignItems:'center',gap:14,marginLeft:'auto',flex:'0 0 auto'}}>
@@ -39,7 +39,7 @@ function Header({page,go,onBook,onSearch,scrolled}){
     <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}><Wordmark/>
       <button onClick={()=>setMenu(false)} aria-label="Cerrar menú" style={{background:'none',border:'1px solid var(--line-hairline)',borderRadius:'50%',width:36,height:36,cursor:'pointer'}}>×</button></div>
     <nav style={{display:'flex',flexDirection:'column',marginTop:28}}>
-      {NAV.map(([k,l])=><a key={k} href={'#'+k} onClick={e=>{e.preventDefault();go(k);setMenu(false)}}
+      {NAV.map(([k,l])=><a key={k} href={'#'+k} onClick={e=>{e.preventDefault();e.stopPropagation();setMenu(false);goSection(k)}}
         style={{fontFamily:'var(--font-display)',fontSize:26,padding:'14px 0',borderBottom:'1px solid var(--line-hairline)',color:'var(--green-800)'}}>{l}</a>)}
     </nav>
     <div style={{marginTop:26}}><Button fullWidth size="lg" onClick={()=>{setMenu(false);onBook()}}>Agendar cita</Button></div>
@@ -47,8 +47,9 @@ function Header({page,go,onBook,onSearch,scrolled}){
   </>;
 }
 
-function Footer({go,onBook}){
-  const nav=(l)=>e=>{e.preventDefault();if(l==='Agendar cita')return onBook&&onBook();FOOT_ROUTES[l]&&go(FOOT_ROUTES[l])};
+const FOOT_SECTIONS={'Nosotros':'nosotros','Especialidades':'especialidades','Médicos':'medicos','Instalaciones':'instalaciones','Sedes':'sedes','Blog':'blog'};
+function Footer({go,goSection,onBook}){
+  const nav=(l)=>e=>{e.preventDefault();if(l==='Agendar cita')return onBook&&onBook();if(FOOT_SECTIONS[l])return goSection(FOOT_SECTIONS[l]);FOOT_ROUTES[l]&&go(FOOT_ROUTES[l])};
   const cols=[['ClinicaMextas',['Nosotros','Especialidades','Médicos','Instalaciones','Sedes']],
     ['Atención',['Agendar cita','Horarios','Primera visita','Urgencias','Check-ups']],
     ['Pacientes',['Preguntas frecuentes','Preparación para estudios','Métodos de pago','Seguros y convenios']],
