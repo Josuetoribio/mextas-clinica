@@ -1,0 +1,28 @@
+<!-- @dsCard group="Components" viewport="700x330" name="Core" subtitle="Button, Badge, Chip, Card, Eyebrow, SectionHeading" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--surface-page)}#root{padding:22px 24px}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300);margin-bottom:10px}</style></head><body><div id="root"></div>
+<script type="text/babel">
+const {Button,Badge,Chip,Card,Eyebrow,SectionHeading}=window.ClinicaMextasDesignSystem_d4abcf;
+function Demo(){const[c,setC]=React.useState('Cardiología');return <div style={{display:'flex',flexDirection:'column',gap:22}}>
+<div><div className="lbl">Button</div><div className="row">
+<Button>Agendar cita</Button><Button variant="secondary">Conocer especialidades</Button>
+<Button variant="ghost">Ver más</Button><Button variant="gold">Solicitar información</Button>
+<Button size="sm">Ver perfil</Button><Button disabled>No disponible</Button></div></div>
+<div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:22}}>
+<div><div className="lbl">Badge</div><div className="row">
+<Badge tone="green">Presencial</Badge><Badge tone="gold">Ejemplo de convenio</Badge>
+<Badge tone="neutral">San Pedro</Badge><Badge tone="danger">Urgencias</Badge><Badge tone="outline">Nuevo</Badge></div></div>
+<div><div className="lbl">Chip (filtro)</div><div className="row">
+{['Cardiología','Pediatría','Nutrición'].map(x=><Chip key={x} selected={c===x} count={4} onClick={()=>setC(x)}>{x}</Chip>)}</div></div>
+</div>
+<div style={{display:'grid',gridTemplateColumns:'1.1fr 1fr',gap:22,alignItems:'start'}}>
+<div><div className="lbl">SectionHeading</div>
+<SectionHeading eyebrow="Nuestro equipo" title="Médicos cerca de ti" description="Un equipo comprometido con tu salud." size="sm"/></div>
+<div><div className="lbl">Card</div><Card interactive padding={20}><div style={{fontWeight:600,color:'var(--text-heading)'}}>Laboratorio clínico</div><div style={{fontSize:13,color:'var(--text-muted)',marginTop:6}}>Resultados rápidos y confiables</div></Card></div>
+</div></div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>

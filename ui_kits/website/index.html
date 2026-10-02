@@ -1,0 +1,272 @@
+<!-- @dsCard group="Sitio web" viewport="1440x1000" name="ClinicaMextas — sitio" subtitle="Home, especialidades, directorio médico, sedes y asistente de solicitud de cita" -->
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClinicaMextas — Atención médica especializada con enfoque humano</title>
+<meta name="description" content="Clínica privada con 30+ especialidades, 5 sedes y solicitud de cita en línea. Atención médica integral, humana y personalizada.">
+<meta property="og:title" content="ClinicaMextas — Clínica privada">
+<meta property="og:description" content="Cuidado médico que te acompaña en cada etapa.">
+<meta property="og:type" content="website">
+<link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script>
+<script src="../../_ds_bundle.js"></script>
+<script src="./data.js"></script>
+<style>
+html,body{margin:0;background:var(--surface-page);overflow-x:hidden}
+@keyframes cmRise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+.cm-mobile{display:none}
+.cm-gtile:hover img{transform:scale(1.03)}
+@media(max-width:1400px){.cm-phone{display:none!important}}
+@media(max-width:1300px){.cm-nav{gap:15px!important}.cm-nav a{font-size:13px!important}}
+@media(max-width:1140px){.cm-desktop{display:none!important}.cm-mobile{display:flex!important}}
+@media(max-width:1080px){
+.cm-two{grid-template-columns:1fr!important;gap:36px!important}
+.cm-hero{grid-template-columns:1fr!important;padding-right:var(--gutter)!important;gap:28px!important;min-height:0!important}
+.cm-hero img{min-height:320px!important;border-radius:var(--radius-lg)!important}
+.cm-trust{grid-template-columns:1fr 1fr!important;gap:18px!important}
+.cm-trust>div{border-left:none!important;padding-left:0!important}
+.cm-quick{grid-template-columns:1fr 1fr!important}
+.cm-quick>button{border-left:none!important;border-top:1px solid var(--line-hairline)}
+.cm-spec-grid{grid-template-columns:repeat(4,minmax(0,1fr))!important}
+.cm-doc-split,.cm-faq,.cm-contact,.cm-spec-hero,.cm-loc,.cm-stats{grid-template-columns:1fr!important;gap:32px!important}
+.cm-doc-grid,.cm-serv-grid,.cm-dir-grid,.cm-blog-grid{grid-template-columns:1fr 1fr!important}
+.cm-footer-grid{grid-template-columns:1fr 1fr!important}
+.cm-filters{grid-template-columns:1fr 1fr!important}
+.cm-emg{grid-template-columns:1fr!important}
+.cm-article,.cm-pat{grid-template-columns:1fr!important;gap:32px!important}
+.cm-article aside,.cm-article>nav{position:static!important}
+.cm-pat-nav{position:static!important;flex-direction:row!important;overflow-x:auto;gap:6px!important;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.cm-gallery{grid-template-columns:repeat(2,1fr)!important;grid-auto-rows:180px!important}
+.cm-steps{grid-template-columns:1fr 1fr!important}
+.cm-stats>div:last-child{border-left:none!important;padding-left:0!important;border-top:1px solid var(--line-inverse);padding-top:28px}
+}
+@media(max-width:720px){
+:root{--text-display-xl:42px;--text-display-lg:38px;--text-display-md:32px;--text-display-sm:27px;--text-title-lg:22px;--text-body-lg:16px;--section-y:64px;--space-10:64px;--space-9:52px;--space-8:40px;--gutter:20px}
+body{padding-bottom:72px}
+.cm-mbar{display:flex!important}.cm-hdr-cta,.cm-wa{display:none!important}
+.cm-float{bottom:84px!important;right:14px!important}
+.cm-cookie{bottom:70px!important;padding:0 12px 10px!important}
+.cm-mfilter{display:flex!important}.cm-filter-card{display:none!important}
+.cm-quick>button{justify-content:flex-start!important;padding:16px 12px!important;font-size:13px!important}
+.cm-hero img{min-height:260px!important}
+.cm-wz3,.cm-wz2,.cm-prof,.cm-two{grid-template-columns:1fr!important}
+.cm-prof img{aspect-ratio:4/3!important;max-height:280px}
+.cm-slots>div{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+[role=radiogroup]{grid-template-columns:1fr!important}
+[data-cm-modal]{padding:0!important;align-items:flex-end!important}
+[data-cm-modal]>[data-cm-panel]{max-width:none!important;width:100%!important;max-height:92vh!important;border-radius:20px 20px 0 0!important}
+[data-cm-panel]>header{padding:18px 20px 14px!important}
+[data-cm-panel]>div{padding:20px!important}
+[data-cm-panel]>footer{padding:14px 20px calc(14px + env(safe-area-inset-bottom))!important}
+[data-cm-panel]>footer>*{flex:1}
+.cm-confirm>*{flex:1 1 100%;margin-left:0!important}
+.cm-doc-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+.cm-doc-grid h3{font-size:15px!important}
+.cm-emg a{justify-content:center;width:100%}
+.cm-spec-grid{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+.cm-doc-grid,.cm-serv-grid,.cm-dir-grid,.cm-blog-grid,.cm-footer-grid,.cm-filters,.cm-trust{grid-template-columns:1fr!important}
+.cm-stats>div:first-child{grid-template-columns:1fr 1fr!important}
+.cm-gallery{grid-auto-rows:150px!important}
+.cm-fac-teaser{grid-template-columns:1fr 1fr!important;grid-template-rows:150px 150px 150px!important}
+.cm-fac-teaser>button:first-child{grid-column:span 2;grid-row:auto!important}
+.cm-fac-teaser>button:last-child{display:none}
+.cm-steps{grid-template-columns:1fr!important}
+}
+</style>
+</head><body>
+<div id="root"></div>
+<script type="text/babel" src="./Chrome.jsx"></script>
+<script type="text/babel" src="./Home.jsx"></script>
+<script type="text/babel" src="./Booking.jsx"></script>
+<script type="text/babel" src="./Directory.jsx"></script>
+<script type="text/babel" src="./Pages.jsx"></script>
+<script type="text/babel" src="./Patients.jsx"></script>
+<script type="text/babel">
+const {Button,Card,Badge,Chip,Input,Modal,Checkbox,Eyebrow}=window.ClinicaMextasDesignSystem_d4abcf;
+const D=window.CM_DATA;
+
+function SearchOverlay({open,onClose,go}){
+  const [q,setQ]=React.useState('');
+  const ref=React.useRef(null);
+  React.useEffect(()=>{if(open&&ref.current)ref.current.focus()},[open]);
+  const t=q.toLowerCase().trim();
+  const res=!t?[]:[
+    ...D.specialties.filter(s=>s.name.toLowerCase().includes(t)).map(s=>({k:'Especialidad',l:s.name,i:s.icon,go:'especialidad:'+s.slug})),
+    ...D.doctors.filter(d=>(d.name+d.specialty+d.sub).toLowerCase().includes(t)).map(d=>({k:'Médico',l:d.name+' · '+d.specialty,i:'user-round',go:'medicos'})),
+    ...D.services.filter(s=>(s.name+s.desc).toLowerCase().includes(t)).map(s=>({k:'Servicio',l:s.name,i:s.icon,go:'servicios'})),
+    ...D.checkups.filter(c=>(c.name+c.includes.join(' ')+' check-up cardiovascular').toLowerCase().includes(t)).map(c=>({k:'Check-up',l:c.name,i:'clipboard-check',go:'checkups'})),
+    ...D.facilities.filter(f=>f.name.toLowerCase().includes(t)).map(f=>({k:'Instalación',l:f.name,i:f.icon,go:'instalaciones'})),
+    ...D.locations.filter(s=>(s.name+s.city).toLowerCase().includes(t)).map(s=>({k:'Sede',l:s.name,i:'map-pin',go:'sedes'})),
+    ...D.articles.map((a,i)=>({a,i})).filter(({a})=>(a.title+a.cat).toLowerCase().includes(t)).map(({a,i})=>({k:'Artículo',l:a.title,i:'file-text',go:'articulo:'+i}))].slice(0,9);
+  if(!open) return null;
+  return <div onClick={onClose} style={{position:'fixed',inset:0,zIndex:95,background:'rgba(18,39,31,.45)',backdropFilter:'blur(3px)',paddingTop:'12vh',display:'flex',justifyContent:'center',animation:'cmRise var(--dur-base) var(--ease-standard)'}}>
+    <div onClick={e=>e.stopPropagation()} style={{width:'min(640px,92vw)',height:'fit-content',background:'var(--surface-raised)',borderRadius:'var(--radius-lg)',boxShadow:'var(--shadow-lg)',overflow:'hidden'}}>
+      <div style={{display:'flex',alignItems:'center',gap:12,padding:'18px 22px',borderBottom:'1px solid var(--line-hairline)'}}>
+        <Icon name="search" size={19} color="var(--text-muted)"/>
+        <input ref={ref} value={q} onChange={e=>setQ(e.target.value)} placeholder="Busca médicos, especialidades, servicios o sedes"
+          onKeyDown={e=>e.key==='Escape'&&onClose()}
+          style={{flex:1,border:'none',outline:'none',fontFamily:'var(--font-sans)',fontSize:16,color:'var(--text-body)',background:'none'}}/>
+        <kbd style={{fontSize:11,color:'var(--text-muted)',border:'1px solid var(--line-hairline)',borderRadius:4,padding:'3px 7px'}}>Esc</kbd>
+      </div>
+      <div style={{maxHeight:'50vh',overflowY:'auto'}}>
+        {!t&&<div style={{padding:22}}><Eyebrow>Búsquedas frecuentes</Eyebrow>
+          <div style={{display:'flex',gap:8,flexWrap:'wrap',marginTop:14}}>{['cardio','pediatría','laboratorio','San Pedro','check-up'].map(x=><Chip key={x} onClick={()=>setQ(x)}>{x}</Chip>)}</div></div>}
+        {t&&!res.length&&<p style={{padding:26,fontSize:14,color:'var(--text-muted)',margin:0}}>Sin resultados para “{q}”. Prueba con una especialidad o el nombre de un médico.</p>}
+        {res.map((r,i)=><button key={i} onClick={()=>{onClose();go(r.go)}}
+          style={{display:'flex',width:'100%',gap:13,alignItems:'center',padding:'13px 22px',background:'none',border:'none',borderBottom:'1px solid var(--line-hairline)',cursor:'pointer',textAlign:'left',fontFamily:'var(--font-sans)'}}
+          onMouseEnter={e=>e.currentTarget.style.background='var(--ivory-100)'} onMouseLeave={e=>e.currentTarget.style.background='none'}>
+          <Icon name={r.i} size={17} color="var(--gold-600)"/>
+          <span style={{fontSize:14.5,color:'var(--text-body)',flex:1}}>{r.l}</span>
+          <Badge tone="neutral" size="sm">{r.k}</Badge></button>)}
+      </div>
+    </div></div>;
+}
+
+function CookieBanner(){
+  const [show,setShow]=React.useState(()=>localStorage.getItem('cm_cookies')===null);
+  const [cfg,setCfg]=React.useState(false);
+  const [prefs,setPrefs]=React.useState({necesarias:true,analiticas:true,preferencias:false});
+  const save=v=>{localStorage.setItem('cm_cookies',JSON.stringify(v||prefs));setShow(false);setCfg(false)};
+  if(!show) return null;
+  return <><div className="cm-cookie" style={{position:'fixed',left:0,right:0,bottom:0,zIndex:70,padding:'0 var(--gutter) 18px'}}>
+    <div style={{maxWidth:'var(--container-max)',margin:'0 auto',background:'var(--surface-raised)',border:'1px solid var(--line-hairline)',borderRadius:'var(--radius-md)',boxShadow:'var(--shadow-lg)',padding:'18px 22px',display:'flex',gap:20,alignItems:'center',flexWrap:'wrap',animation:'cmRise var(--dur-slow) var(--ease-entrance)'}}>
+      <Icon name="cookie" size={22} color="var(--gold-600)"/>
+      <p style={{fontSize:13.5,color:'var(--text-body)',margin:0,flex:1,minWidth:260,lineHeight:1.6}}>Utilizamos cookies para mejorar la experiencia y analizar el funcionamiento del sitio.</p>
+      <div style={{display:'flex',gap:9,flexWrap:'wrap'}}>
+        <Button size="sm" variant="ghost" onClick={()=>save({necesarias:true,analiticas:false,preferencias:false})}>Solo necesarias</Button>
+        <Button size="sm" variant="secondary" onClick={()=>setCfg(true)}>Configurar</Button>
+        <Button size="sm" onClick={()=>save({necesarias:true,analiticas:true,preferencias:true})}>Aceptar</Button></div>
+    </div></div>
+  <Modal open={cfg} onClose={()=>setCfg(false)} size="sm" eyebrow="Cookies" title="Configura tus preferencias"
+    footer={<><Button variant="ghost" onClick={()=>setCfg(false)}>Cancelar</Button><Button onClick={()=>save()}>Guardar preferencias</Button></>}>
+    {[['necesarias','Necesarias','Imprescindibles para el funcionamiento del sitio. No se pueden desactivar.'],
+      ['analiticas','Analíticas','Nos ayudan a entender cómo se usa el sitio.'],
+      ['preferencias','Preferencias','Recuerdan tus ajustes, como la sede seleccionada.']].map(([k,l,d])=>
+      <div key={k} style={{display:'flex',justifyContent:'space-between',gap:20,alignItems:'flex-start',padding:'16px 0',borderBottom:'1px solid var(--line-hairline)'}}>
+        <div><div style={{fontSize:14.5,fontWeight:600,color:'var(--text-heading)'}}>{l}</div>
+        <div style={{fontSize:12.5,color:'var(--text-muted)',marginTop:4,lineHeight:1.5}}>{d}</div></div>
+        <button type="button" disabled={k==='necesarias'} aria-pressed={prefs[k]} aria-label={l}
+          onClick={()=>setPrefs(p=>({...p,[k]:!p[k]}))}
+          style={{width:42,height:24,flex:'0 0 42px',borderRadius:999,border:'none',cursor:k==='necesarias'?'not-allowed':'pointer',opacity:k==='necesarias'?.5:1,
+            background:prefs[k]?'var(--green-800)':'var(--ivory-400)',position:'relative',transition:'background var(--dur-fast) var(--ease-standard)'}}>
+          <span style={{position:'absolute',top:3,left:prefs[k]?21:3,width:18,height:18,borderRadius:'50%',background:'#fff',transition:'left var(--dur-fast) var(--ease-standard)'}}/></button>
+      </div>)}
+  </Modal></>;
+}
+
+function MobileBar({onBook}){
+  return <div className="cm-mbar" style={{display:'none',position:'fixed',left:0,right:0,bottom:0,zIndex:65,background:'rgba(249,246,240,.96)',backdropFilter:'blur(12px)',borderTop:'1px solid var(--line-hairline)',padding:'10px 14px calc(10px + env(safe-area-inset-bottom))',gap:10,alignItems:'center'}}>
+    <a href="tel:+528112345678" aria-label="Llamar a la clínica" style={{width:48,height:48,flex:'0 0 48px',borderRadius:'var(--radius-sm)',border:'1px solid var(--line-strong)',display:'grid',placeItems:'center'}}><Icon name="phone" size={19} color="var(--green-800)"/></a>
+    <a href="#" onClick={e=>e.preventDefault()} aria-label="WhatsApp" style={{width:48,height:48,flex:'0 0 48px',borderRadius:'var(--radius-sm)',border:'1px solid var(--line-strong)',display:'grid',placeItems:'center'}}><Icon name="message-circle" size={19} color="var(--green-800)"/></a>
+    <div style={{flex:1}}><Button fullWidth size="lg" onClick={onBook} icon={<Icon name="calendar-days" size={17}/>}>Agendar cita</Button></div>
+  </div>;
+}
+function FloatingActions({onTop,showTop}){
+  return <div className="cm-float" style={{position:'fixed',right:20,bottom:88,zIndex:60,display:'flex',flexDirection:'column',gap:11}}>
+    {showTop&&<button onClick={onTop} aria-label="Volver arriba" style={{width:44,height:44,borderRadius:'50%',background:'var(--surface-raised)',border:'1px solid var(--line-hairline)',boxShadow:'var(--shadow-md)',cursor:'pointer',display:'grid',placeItems:'center'}}>
+      <Icon name="arrow-up" size={18} color="var(--green-800)"/></button>}
+    <a href="#" className="cm-wa" onClick={e=>e.preventDefault()} aria-label="Escríbenos por WhatsApp" style={{width:52,height:52,borderRadius:'50%',background:'var(--green-700)',boxShadow:'var(--shadow-lg)',display:'grid',placeItems:'center'}}>
+      <Icon name="message-circle" size={23} color="var(--ivory-100)"/></a>
+  </div>;
+}
+
+function App(){
+  const [page,setPage]=React.useState('inicio');
+  const [book,setBook]=React.useState(null);
+  const [search,setSearch]=React.useState(false);
+  const [scrolled,setScrolled]=React.useState(false);
+  const [svc,setSvc]=React.useState(null);
+  const scroller=React.useRef(null);
+  React.useEffect(()=>{const el=document.scrollingElement||document.documentElement;
+    const h=()=>setScrolled(window.scrollY>60);window.addEventListener('scroll',h);return()=>window.removeEventListener('scroll',h)},[]);
+  React.useEffect(()=>{window.scrollTo({top:0,behavior:'instant'});window.lucide&&window.lucide.createIcons()},[page]);
+  React.useEffect(()=>{const k=e=>{if((e.metaKey||e.ctrlKey)&&e.key==='k'){e.preventDefault();setSearch(true)}};window.addEventListener('keydown',k);return()=>window.removeEventListener('keydown',k)},[]);
+  const go=p=>setPage(p);
+  const openBook=(preset)=>setBook(preset&&preset.name?{specialty:preset.specialty,doctor:preset.name,location:'Sede '+preset.location}:(preset||{}));
+  const base=page.split(':')[0], arg=page.split(':')[1];
+  return <>
+    <Header page={base==='especialidad'||base==='especialidades-todas'?'especialidades':base} go={go} onBook={()=>openBook()} onSearch={()=>setSearch(true)} scrolled={scrolled}/>
+    <main key={page} style={{animation:'cmRise var(--dur-slow) var(--ease-entrance)'}}>
+      {page==='inicio'&&<>
+        <Hero onBook={()=>openBook()} go={go}/>
+        <QuickActions onBook={()=>openBook()} go={go}/>
+        <Specialties go={go}/>
+        <Doctors go={go} onBook={openBook}/>
+        <Services onOpen={setSvc}/>
+        <CheckupTeaser go={go}/>
+        <Stats/>
+        <FacilitiesTeaser go={go}/>
+        <FirstVisit go={go}/>
+        <Emergency go={go}/>
+        <Faq/>
+        <Blog go={go}/>
+        <ContactBlock/>
+      </>}
+      {base==='medicos'&&<DirectoryPage onBook={openBook} go={go}/>}
+      {base==='especialidad'&&<SpecialtyPage slug={page.split(':')[1]} onBook={openBook} go={go}/>}
+      {(base==='especialidades'||base==='especialidades-todas')&&<AllSpecialties go={go}/>}
+      {base==='sedes'&&<LocationsPage onBook={openBook} go={go}/>}
+      {base==='servicios'&&<><Section py="var(--space-7) 0 0"><Crumbs go={go} items={[['Servicios']]}/></Section><Services onOpen={setSvc}/><CheckupTeaser go={go}/><Emergency go={go}/></>}
+      {base==='instalaciones'&&<FacilitiesPage go={go}/>}
+      {base==='tecnologia'&&<TechnologyPage go={go}/>}
+      {base==='checkups'&&<CheckupsPage go={go}/>}
+      {base==='pacientes'&&<PatientsPage tab={arg} go={go}/>}
+      {base==='articulo'&&<ArticlePage idx={+arg||0} go={go} onBook={openBook}/>}
+      {base==='urgencias'&&<UrgenciasPage go={go}/>}
+      {base==='legal'&&<LegalPage kind={arg} go={go}/>}
+      {base==='blog'&&<><Section py="var(--space-7) 0 0"><Crumbs go={go} items={[['Blog']]}/></Section><Blog go={go}/></>}
+      {base==='contacto'&&<ContactBlock/>}
+      {base==='nosotros'&&<>
+        <Section>
+          <SectionHeading eyebrow="Nosotros" title="Una clínica construida alrededor del paciente"
+            description="ClinicaMextas nació en 2016 como un consultorio de medicina interna en San Pedro Garza García. Hoy son cinco sedes que comparten un mismo modelo: escuchar antes de indicar."/>
+          <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16,marginTop:44}}>
+            {[['Misión','Ofrecer atención médica especializada, accesible y humana, con continuidad real entre consultas.'],
+              ['Visión','Ser la clínica privada de referencia en el noreste de México por la calidad de su trato, no solo de su tecnología.'],
+              ['Filosofía','Medicina centrada en el paciente: prevención, explicación clara y seguimiento en cada etapa.']].map(([t,d])=>
+              <Card key={t} padding={28}><Eyebrow>{t}</Eyebrow>
+                <p style={{fontSize:15,lineHeight:1.7,color:'var(--text-body)',marginTop:14}}>{d}</p></Card>)}
+          </div>
+        </Section>
+        <Section tone="raised">
+          <SectionHeading align="center" eyebrow="Nuestro modelo de atención" title="Cinco momentos en cada consulta"/>
+          <div className="cm-serv-grid" style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:14,marginTop:44}}>
+            {[['ear','Escuchamos'],['search-check','Evaluamos'],['message-square-text','Explicamos'],['heart-handshake','Acompañamos'],['repeat','Damos seguimiento']].map(([i,l],k)=>
+              <div key={l} style={{textAlign:'center',padding:'0 8px',borderLeft:k?'1px solid var(--line-hairline)':'none'}}>
+                <Icon name={i} size={28} color="var(--gold-600)"/>
+                <div style={{fontFamily:'var(--font-display)',fontSize:19,marginTop:14,color:'var(--text-heading)'}}>{l}</div>
+                <div style={{fontSize:12.5,color:'var(--text-muted)',marginTop:7}}>Paso {k+1}</div></div>)}
+          </div>
+        </Section>
+        <Section>
+          <SectionHeading align="center" eyebrow="Nuestros valores" title="Lo que no negociamos"/>
+          <div style={{display:'flex',gap:10,flexWrap:'wrap',justifyContent:'center',marginTop:32}}>
+            {['Empatía','Excelencia','Confianza','Innovación','Ética','Cercanía'].map(v=><Badge key={v} tone="green">{v}</Badge>)}</div>
+        </Section>
+      </>}
+    </main>
+    <Footer go={go} onBook={()=>openBook()}/>
+    <BookingWizard open={!!book} onClose={()=>setBook(null)} preset={book}/>
+    <SearchOverlay open={search} onClose={()=>setSearch(false)} go={go}/>
+    <Modal open={!!svc} onClose={()=>setSvc(null)} size="sm" eyebrow="Servicio" title={svc&&svc.name}
+      footer={<><Button variant="ghost" onClick={()=>setSvc(null)}>Cerrar</Button><Button onClick={()=>{setSvc(null);openBook()}}>Solicitar información</Button></>}>
+      <p style={{fontSize:15,lineHeight:1.7,color:'var(--text-body)',margin:0}}>{svc&&svc.detail}</p>
+      <p style={{fontSize:12.5,color:'var(--text-muted)',marginTop:16}}>Información demostrativa. Consulta disponibilidad por sede con recepción.</p>
+    </Modal>
+    <MobileBar onBook={()=>openBook()}/>
+    <FloatingActions showTop={scrolled} onTop={()=>window.scrollTo({top:0,behavior:'smooth'})}/>
+    <CookieBanner/>
+  </>;
+}
+(function mount(){
+  const ready=window.Header&&window.Hero&&window.BookingWizard&&window.DirectoryPage&&window.FacilitiesPage&&window.PatientsPage&&window.ClinicaMextasDesignSystem_d4abcf&&window.ClinicaMextasDesignSystem_d4abcf.Button;
+  if(!ready) return setTimeout(mount,60);
+  ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+  setTimeout(()=>window.lucide&&window.lucide.createIcons(),80);
+})();
+</script>
+</body></html>

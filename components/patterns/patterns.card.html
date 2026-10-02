@@ -1,0 +1,34 @@
+<!-- @dsCard group="Components" viewport="700x560" name="Patrones de clínica" subtitle="SpecialtyCard, DoctorCard, StatBlock, StepIndicator, TimeSlotPicker, Accordion, Modal" -->
+<!DOCTYPE html><html><head><meta charset="utf-8"><link rel="stylesheet" href="../../styles.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<style>html,body{margin:0;background:var(--surface-page)}#root{padding:22px 24px}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.lbl{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-300);margin-bottom:10px}</style><script src="https://unpkg.com/lucide@0.454.0/dist/umd/lucide.min.js"></script></head><body><div id="root"></div>
+<script type="text/babel">
+const {SpecialtyCard,DoctorCard,StatBlock,StepIndicator,TimeSlotPicker,Accordion,Modal,Button}=window.ClinicaMextasDesignSystem_d4abcf;
+const Ic=({n,s=28})=>{const r=React.useRef(null);React.useEffect(()=>{if(r.current){r.current.innerHTML='';const e=document.createElement('i');e.setAttribute('data-lucide',n);r.current.appendChild(e);window.lucide&&window.lucide.createIcons({attrs:{width:s,height:s,'stroke-width':1.5}})}},[n]);return <span ref={r} style={{display:'flex'}}/>};
+function Demo(){const[t,setT]=React.useState('10:30 AM'),[o,setO]=React.useState(false);
+return <div style={{display:'flex',flexDirection:'column',gap:24}}>
+<div><div className="lbl">SpecialtyCard</div><div style={{display:'grid',gridTemplateColumns:'repeat(5,1fr)',gap:10}}>
+{[['Medicina General','stethoscope'],['Pediatría','baby'],['Cardiología','heart-pulse'],['Dermatología','scan-face'],['Nutrición','apple']].map(([n,i])=><SpecialtyCard key={n} name={n} icon={<Ic n={i}/>}/>)}</div></div>
+<div style={{display:'grid',gridTemplateColumns:'220px 1fr',gap:18,alignItems:'start'}}>
+<div><div className="lbl">DoctorCard</div><DoctorCard name="Dr. Alejandro Garza" specialty="Cardiología" license="1234567" photo="../../assets/photos/doctor-cardiologia.png" location="Sede San Pedro" actions={<Button size="sm" variant="secondary">Ver perfil</Button>}/></div>
+<div style={{display:'flex',flexDirection:'column',gap:18}}>
+<div><div className="lbl">StepIndicator</div><StepIndicator current={2} steps={['Motivo','Especialidad','Médico','Sede','Fecha']}/></div>
+<div><div className="lbl">TimeSlotPicker</div><TimeSlotPicker slots={['09:00 AM','09:30 AM',{time:'10:00 AM',disabled:true},'10:30 AM','12:00 PM','04:00 PM','04:30 PM','05:30 PM']} value={t} onChange={setT}/></div>
+<div><div className="lbl">StatBlock (banda verde)</div><div style={{background:'var(--surface-inverse)',borderRadius:'var(--radius-md)',padding:'20px 24px',display:'grid',gridTemplateColumns:'repeat(3,1fr)',gap:16}}>
+<StatBlock value="10+" label="Años de experiencia"/><StatBlock value="25K+" label="Pacientes atendidos"/><StatBlock value="5" label="Sedes"/></div></div>
+</div></div>
+<div style={{display:'grid',gridTemplateColumns:'1fr auto',gap:24,alignItems:'start'}}>
+<div><div className="lbl">Accordion</div><Accordion defaultOpen={[0]} items={[
+{question:'¿Cómo puedo agendar una cita?',answer:'Desde el botón “Agendar cita” en el encabezado. Recibirás la confirmación de tu solicitud por correo.'},
+{question:'¿Puedo elegir médico?'},{question:'¿Atienden pacientes nuevos?'}]}/></div>
+<div><div className="lbl">Modal</div><Button variant="secondary" onClick={()=>setO(true)}>Abrir modal</Button></div>
+</div>
+<Modal open={o} onClose={()=>setO(false)} eyebrow="Agendar cita" title="¿Qué necesitas?" footer={<><Button variant="ghost" onClick={()=>setO(false)}>Cancelar</Button><Button onClick={()=>setO(false)}>Continuar</Button></>}>
+<p style={{fontSize:15,color:'var(--text-muted)',margin:0}}>Selecciona el tipo de atención que buscas. Esta es una solicitud de cita; recepción confirmará la disponibilidad.</p>
+</Modal>
+</div>}
+ReactDOM.createRoot(document.getElementById('root')).render(<Demo/>);
+</script></body></html>
