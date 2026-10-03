@@ -1,7 +1,7 @@
 # Despliegue: ClinicaMextas · Clínica privada
 
 Este repositorio contiene el export original de Claude Design de la landing **ClinicaMextas · Clínica privada**.
-Los archivos originales no se modifican. El build genera una versión de producción en `dist/`
+Los archivos originales no se modifican, salvo las correcciones de «Ajustes propios». El build genera una versión de producción en `dist/`
 y GitHub Actions la publica en GitHub Pages en cada `push` a `main`.
 
 - **URL pública:** https://mextas.com/clinica/
@@ -42,6 +42,12 @@ Las correcciones de la versión publicada que no vienen del export, como evitar 
 horizontal en móviles, van en `overrides.css`. Al estar fuera de `ui_kits/`, una nueva
 exportación de Claude Design no las borra. Si un nuevo export cambia el diseño, revisa que
 sigan siendo necesarias.
+
+Unas pocas correcciones tienen que ir dentro de `ui_kits/`, y un nuevo export las deshace. Para
+verlas todas: `git log -- ui_kits`. Después de un export, vuelve a aplicarlas y prueba la demo.
+
+- El aviso de cookies (`ui_kits/website/index.html`) protege el acceso a `localStorage`. Si el navegador
+  bloquea los datos del sitio, ese acceso lanza un error y la página quedaba en blanco al abrirla.
 
 ## Actualizar la landing
 

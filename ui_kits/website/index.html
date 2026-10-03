@@ -128,10 +128,11 @@ function SearchOverlay({open,onClose,go}){
 }
 
 function CookieBanner(){
-  const [show,setShow]=React.useState(()=>localStorage.getItem('cm_cookies')===null);
+  /* Con los datos del sitio bloqueados, localStorage lanza un error: el aviso se muestra y se cierra igual. */
+  const [show,setShow]=React.useState(()=>{try{return localStorage.getItem('cm_cookies')===null}catch(e){return true}});
   const [cfg,setCfg]=React.useState(false);
   const [prefs,setPrefs]=React.useState({necesarias:true,analiticas:true,preferencias:false});
-  const save=v=>{localStorage.setItem('cm_cookies',JSON.stringify(v||prefs));setShow(false);setCfg(false)};
+  const save=v=>{try{localStorage.setItem('cm_cookies',JSON.stringify(v||prefs))}catch(e){}setShow(false);setCfg(false)};
   if(!show) return null;
   return <><div className="cm-cookie" style={{position:'fixed',left:0,right:0,bottom:0,zIndex:70,padding:'0 var(--gutter) 18px'}}>
     <div style={{maxWidth:'var(--container-max)',margin:'0 auto',background:'var(--surface-raised)',border:'1px solid var(--line-hairline)',borderRadius:'var(--radius-md)',boxShadow:'var(--shadow-lg)',padding:'18px 22px',display:'flex',gap:20,alignItems:'center',flexWrap:'wrap',animation:'cmRise var(--dur-slow) var(--ease-entrance)'}}>
